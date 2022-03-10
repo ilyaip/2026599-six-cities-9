@@ -1,12 +1,14 @@
-import PlaceCard from '../place-card/place-card';
+import OfferList from '../offer-list/offer-list';
+import { Offer } from '../../types/offer';
 
 type WelcomeScreenProps = {
   rentalOffers: number;
+  offers: Offer[];
 }
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-function WelcomeScreen({rentalOffers} : WelcomeScreenProps) : JSX.Element {
+function WelcomeScreen({rentalOffers, offers} : WelcomeScreenProps) : JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -76,13 +78,7 @@ function WelcomeScreen({rentalOffers} : WelcomeScreenProps) : JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <PlaceCard/>
-                <PlaceCard/>
-                <PlaceCard/>
-                <PlaceCard/>
-                <PlaceCard/>
-              </div>
+              <OfferList offers={offers}></OfferList>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
