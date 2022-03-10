@@ -1,19 +1,19 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
+import { ratingCalculation } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
 }
 
 function PlaceCard({offer}: PlaceCardProps) : JSX.Element {
-  // eslint-disable-next-line no-console
   return (
     <article className="cities__place-card place-card">
       <div className="place-card__mark">
         <span>{offer.premium}</span>
       </div>
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`offer/${offer.id}`}>
+        <Link to="#">
           <img className="place-card__image" src={offer.photosSrc[0]} width="260" height="200" alt="Place image" />
         </Link>
       </div>
@@ -32,7 +32,7 @@ function PlaceCard({offer}: PlaceCardProps) : JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${+offer.rating * 20}%`}}></span>
+            <span style={{width: `${ratingCalculation(offer.rating)}`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

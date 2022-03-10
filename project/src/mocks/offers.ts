@@ -9,7 +9,7 @@ export const offers: Offer[] = [
     isFavorite: false,
     photosSrc: ['img/room.jpg', 'img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg', 'img/studio-01.jpg', 'img/apartment-01.jpg' ],
     roomType: 'Rooms',
-    rating: 5,
+    rating: 4.5,
     numberOfRooms: 3,
     numberOfGuests: 4,
     price: 120,

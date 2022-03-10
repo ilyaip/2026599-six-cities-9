@@ -2,6 +2,11 @@ import {useParams} from 'react-router-dom';
 import { Offer } from '../../types/offer';
 import CommentForm from '../comment-form/comment-form';
 import { Link } from 'react-router-dom';
+import Header from '../header/header';
+import { nanoid } from 'nanoid';
+import { Navigate } from 'react-router';
+import { ratingCalculation } from '../../const';
+
 
 type RoomScreenProps = {
   offers: Offer[]
@@ -10,38 +15,14 @@ type RoomScreenProps = {
 function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
   const params = useParams();
   const curId : string | undefined = params.id;
-  const curOffer: Offer = offers?.filter((item) => item.id === +curId!)[0];
+  const curOffer: Offer| undefined = offers.find((item) => item.id === Number(curId!));
+  if (!curOffer) {
+    return <Navigate to="*" />;
+  }
 
-  // eslint-disable-next-line no-console
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to="/">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to="#">
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header></Header>
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -50,7 +31,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
               {
                 curOffer.photosSrc.map((image) =>
                   (
-                    <div key={image} className="property__image-wrapper">
+                    <div key={nanoid(5)} className="property__image-wrapper">
                       <img className="property__image" src={image} alt="Photo studio" />
                     </div>
                   ),
@@ -76,7 +57,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${+curOffer.rating * 20}%`}}></span>
+                  <span style={{width: `${ratingCalculation(curOffer.rating)}`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{curOffer.rating}</span>
@@ -102,7 +83,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
                   {
                     curOffer.roomService.map((item) =>
                       (
-                        <li key={item} className="property__inside-item">
+                        <li key={nanoid(5)} className="property__inside-item">
                           {item}
                         </li>
                       ),
@@ -135,7 +116,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
                   {
                     curOffer.reviews.map((review) =>
                       (
-                        <li key={review.userName} className="reviews__item">
+                        <li key={nanoid(5)} className="reviews__item">
                           <div className="reviews__user user">
                             <div className="reviews__avatar-wrapper user__avatar-wrapper">
                               <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
@@ -147,7 +128,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
                           <div className="reviews__info">
                             <div className="reviews__rating rating">
                               <div className="reviews__stars rating__stars">
-                                <span style={{width: `${+review.userRating * 20}%`}}></span>
+                                <span style={{width: `${ratingCalculation(review.userRating)}`}}></span>
                                 <span className="visually-hidden">Rating</span>
                               </div>
                             </div>

@@ -1,10 +1,7 @@
-// import { Offer } from '../../types/offer';
-// import { Link } from 'react-router-dom';
-import {useState, ChangeEvent} from 'react';
+import {useState, ChangeEvent, Fragment} from 'react';
+import { nanoid } from 'nanoid';
 
-// type PlaceCardProps = {
-//   offer: Offer;
-// }
+const RATING_STARS = [5, 4, 3, 2, 1];
 
 function CommentForm() : JSX.Element {
   const [userComment, setUserComment] = useState({
@@ -16,7 +13,28 @@ function CommentForm() : JSX.Element {
     <form className="reviews__form form" action="#" method="post">
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"
+        {
+          RATING_STARS.map((rating) =>
+            (
+              <Fragment key={nanoid(5)}>
+                <input className="form__rating-input visually-hidden" checked={rating === Number(userComment.userRating)} name="rating" value={rating} id={`${rating}-stars`} type="radio"
+                  onChange={({target}: ChangeEvent<HTMLInputElement>) => {
+                    setUserComment({
+                      ...userComment,
+                      userRating: target.value,
+                    });
+                  }}
+                />
+                <label htmlFor={`${rating}-stars`} className="reviews__rating-label form__rating-label" title="perfect">
+                  <svg className="form__star-image" width="37" height="33">
+                    <use xlinkHref="#icon-star"></use>
+                  </svg>
+                </label>
+              </Fragment>
+            ),
+          )
+        }
+        {/* <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"
           onChange={({target}: ChangeEvent<HTMLInputElement>) => {
             setUserComment({
               ...userComment,
@@ -84,7 +102,7 @@ function CommentForm() : JSX.Element {
           <svg className="form__star-image" width="37" height="33">
             <use xlinkHref="#icon-star"></use>
           </svg>
-        </label>
+        </label> */}
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => {
