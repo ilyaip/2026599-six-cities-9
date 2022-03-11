@@ -32,7 +32,7 @@ function PlaceCard({offer}: PlaceCardProps) : JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: `${ratingCalculation(offer.rating)}`}}></span>
+            <span style={{width: ratingCalculation(offer.rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

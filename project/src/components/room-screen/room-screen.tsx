@@ -22,7 +22,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
 
   return (
     <div className="page">
-      <Header></Header>
+      <Header/>
 
       <main className="page__main page__main--property">
         <section className="property">
@@ -57,7 +57,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: `${ratingCalculation(curOffer.rating)}`}}></span>
+                  <span style={{width: ratingCalculation(curOffer.rating)}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{curOffer.rating}</span>
@@ -128,7 +128,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
                           <div className="reviews__info">
                             <div className="reviews__rating rating">
                               <div className="reviews__stars rating__stars">
-                                <span style={{width: `${ratingCalculation(review.userRating)}`}}></span>
+                                <span style={{width: ratingCalculation(review.userRating)}}></span>
                                 <span className="visually-hidden">Rating</span>
                               </div>
                             </div>

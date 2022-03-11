@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import Header from '../header/header';
 
 function RegistrationScreen() : JSX.Element {
   return (
     <div className="page page--gray page--login">
-      <Header></Header>
+      <Header isLoginPage />
 
       <main className="page__main page__main--login">
         <div className="page__login-container container">
@@ -24,7 +25,7 @@ function RegistrationScreen() : JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to="/">
+              <Link className="locations__item-link" to={AppRoute.Root}>
                 <span>Amsterdam</span>
               </Link>
             </div>

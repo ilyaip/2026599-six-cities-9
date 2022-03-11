@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom';
 import Header from '../header/header';
 import { AppRoute } from '../../const';
 
-type FavoriteOrdersScreenProps = {
+type FavoriteOffersScreenProps = {
   offers: Offer[];
 }
 
-function FavoriteOffersScreen({offers} : FavoriteOrdersScreenProps) : JSX.Element {
+function FavoriteOffersScreen({offers} : FavoriteOffersScreenProps) : JSX.Element {
   return (
     <div className="page page--favorites-empty">
-      <Header></Header>
+      <Header />
 
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">

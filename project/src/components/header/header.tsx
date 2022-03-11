@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 
-function Header() : JSX.Element {
-  const urlName = window.location.pathname;
-  let isLoginPageFlag = false;
-  if (urlName.indexOf(AppRoute.Login) + 1) {isLoginPageFlag = true;}
+type HeaderProps = {
+  isLoginPage? : boolean,
+}
+
+function Header({isLoginPage} : HeaderProps) : JSX.Element {
   return (
     <header className="header">
       <div className="container">
@@ -15,7 +16,7 @@ function Header() : JSX.Element {
             </Link>
           </div>
           {
-            !isLoginPageFlag ?
+            !isLoginPage ?
               <nav className="header__nav">
                 <ul className="header__nav-list">
                   <li className="header__nav-item user">
