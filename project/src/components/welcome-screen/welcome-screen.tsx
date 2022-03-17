@@ -2,6 +2,7 @@ import OfferList from '../offer-list/offer-list';
 import Header from '../header/header';
 import { Offer } from '../../types/offer';
 import Map from '../map/map';
+import {useState} from 'react';
 
 type WelcomeScreenProps = {
   rentalOffers: number;
@@ -11,6 +12,13 @@ type WelcomeScreenProps = {
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 function WelcomeScreen({rentalOffers, offers} : WelcomeScreenProps) : JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
+
+  const onListItemHover = (listItemName: string) => {
+    const currentOffer = offers.find((offer) => offer.title === listItemName);
+
+    setSelectedPoint(currentOffer);
+  };
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -54,10 +62,10 @@ function WelcomeScreen({rentalOffers, offers} : WelcomeScreenProps) : JSX.Elemen
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <OfferList offers={offers}></OfferList>
+              <OfferList offers={offers} onListItemHover={onListItemHover}></OfferList>
             </section>
             <div className="cities__right-section">
-              <Map offers={offers}></Map>
+              <Map offers={offers} selectedPoint={selectedPoint}></Map>
             </div>
           </div>
         </div>
