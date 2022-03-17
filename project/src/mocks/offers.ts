@@ -34,7 +34,7 @@ export const offers: Offer[] = [
         reviewDate: 'April 2019',
       },
     ],
-    mapCoordinates: '',
+    mapCoordinates: ['52.3909553943508', '4.85309666406198'],
     otherPlacesId: [2, 3, 4],
   },
   {
@@ -70,7 +70,7 @@ export const offers: Offer[] = [
         reviewDate: 'April 2019',
       },
     ],
-    mapCoordinates: '',
+    mapCoordinates: ['52.369553943508', '4.85309666406198'],
     otherPlacesId: [2, 3, 4],
   },
   {
@@ -106,7 +106,7 @@ export const offers: Offer[] = [
         reviewDate: 'April 2019',
       },
     ],
-    mapCoordinates: '',
+    mapCoordinates: ['52.3909553943508', '4.929309666406198'],
     otherPlacesId: [2, 3, 4],
   },
   {
@@ -142,7 +142,7 @@ export const offers: Offer[] = [
         reviewDate: 'April 2019',
       },
     ],
-    mapCoordinates: '',
+    mapCoordinates: ['52.3809553943508', '4.939309666406198'],
     otherPlacesId: [2, 3, 4],
   },
 ];

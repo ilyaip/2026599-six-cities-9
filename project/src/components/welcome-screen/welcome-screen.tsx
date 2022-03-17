@@ -1,6 +1,7 @@
 import OfferList from '../offer-list/offer-list';
 import Header from '../header/header';
 import { Offer } from '../../types/offer';
+import Map from '../map/map';
 
 type WelcomeScreenProps = {
   rentalOffers: number;
@@ -56,7 +57,7 @@ function WelcomeScreen({rentalOffers, offers} : WelcomeScreenProps) : JSX.Elemen
               <OfferList offers={offers}></OfferList>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map offers={offers}></Map>
             </div>
           </div>
         </div>

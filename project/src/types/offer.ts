@@ -27,6 +27,6 @@ export type Offer = {
   roomService: string[],
   host: Host,
   reviews: Review[],
-  mapCoordinates: string,
+  mapCoordinates: string[],
   otherPlacesId: number[]
 }
