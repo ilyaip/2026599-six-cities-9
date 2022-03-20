@@ -4,11 +4,19 @@ import { ratingCalculation } from '../../const';
 
 type PlaceCardProps = {
   offer: Offer;
+  onListItemHover?: (listItemName: string) => void;
 }
 
-function PlaceCard({offer}: PlaceCardProps) : JSX.Element {
+function PlaceCard({offer, onListItemHover}: PlaceCardProps) : JSX.Element {
+  const listItemHoverHandler = (event: any) => {
+    event.preventDefault();
+    if (onListItemHover) {
+      onListItemHover(offer.title);
+    }
+  };
+
   return (
-    <article className="cities__place-card place-card">
+    <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
       <div className="place-card__mark">
         <span>{offer.premium}</span>
       </div>
