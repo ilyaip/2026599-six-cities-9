@@ -3,6 +3,7 @@ import Header from '../header/header';
 import { Offer } from '../../types/offer';
 import Map from '../map/map';
 import {useState} from 'react';
+import CityList from '../city-list/city-list';
 
 type WelcomeScreenProps = {
   rentalOffers: number;
@@ -25,23 +26,7 @@ function WelcomeScreen({rentalOffers, offers} : WelcomeScreenProps) : JSX.Elemen
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <section className="locations container">
-            <ul className="locations__list tabs__list">
-              {
-                CITIES.map((city) =>
-                  (
-                    <li key={city} className="locations__item">
-                      <a className="locations__item-link tabs__item" href="#">
-                        <span>{city}</span>
-                      </a>
-                    </li>
-                  ),
-                )
-              }
-            </ul>
-          </section>
-        </div>
+        <CityList cities={CITIES}></CityList>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
