@@ -4,3 +4,6 @@ export const fillOfferList = createAction('city/fillOfferList');
 export const changeCity = createAction('city/change', (value) => ({
   payload: value,
 }));
+export const changeSort = createAction('city/changeSort', (value) => ({
+  payload: value,
+}));
