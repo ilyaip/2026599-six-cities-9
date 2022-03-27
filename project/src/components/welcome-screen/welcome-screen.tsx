@@ -4,6 +4,7 @@ import { Offer } from '../../types/offer';
 import Map from '../map/map';
 import {useState} from 'react';
 import CityList from '../city-list/city-list';
+import { useAppSelector } from '../../hooks';
 
 type WelcomeScreenProps = {
   rentalOffers: number;
@@ -20,18 +21,20 @@ function WelcomeScreen({rentalOffers, offers} : WelcomeScreenProps) : JSX.Elemen
 
     setSelectedPoint(currentOffer);
   };
+  const activeCityObj = useAppSelector((state) => state.activeCityObj);
+
   return (
     <div className="page page--gray page--main">
       <Header />
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <CityList cities={CITIES}></CityList>
+        <CityList cities={CITIES}/>
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{rentalOffers} places to stay in Amsterdam</b>
+              <b className="places__found">{activeCityObj.offerCount} places to stay in {activeCityObj.city}</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>

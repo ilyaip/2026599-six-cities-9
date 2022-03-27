@@ -1,4 +1,4 @@
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
 
 type CityListProps = {
@@ -7,6 +7,21 @@ type CityListProps = {
 
 function CityList({cities}: CityListProps) : JSX.Element {
   const dispatch = useAppDispatch();
+  const {activeCity} = useAppSelector((state) => state);
+
+  const cityItem = (city: string) => {
+    if (activeCity === city) {
+      return (
+        <a className="locations__item-link tabs__item tabs__item--active" href="#">
+          <span>{city}</span>
+        </a>);
+    } else {
+      return (
+        <a className="locations__item-link tabs__item" href="#">
+          <span>{city}</span>
+        </a>);
+    }
+  };
   return (
     <div className="tabs">
       <section className="locations container">
@@ -18,9 +33,7 @@ function CityList({cities}: CityListProps) : JSX.Element {
                   dispatch(changeCity(city));
                 }} key={city} className="locations__item"
                 >
-                  <a className="locations__item-link tabs__item" href="#">
-                    <span>{city}</span>
-                  </a>
+                  {cityItem(city)}
                 </li>
               ),
             )
@@ -30,5 +43,4 @@ function CityList({cities}: CityListProps) : JSX.Element {
     </div>
   );
 }
-
 export default CityList;
