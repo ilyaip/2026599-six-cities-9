@@ -9,19 +9,6 @@ function CityList({cities}: CityListProps) : JSX.Element {
   const dispatch = useAppDispatch();
   const {activeCity} = useAppSelector((state) => state);
 
-  const cityItem = (city: string) => {
-    if (activeCity === city) {
-      return (
-        <a className="locations__item-link tabs__item tabs__item--active" href="#">
-          <span>{city}</span>
-        </a>);
-    } else {
-      return (
-        <a className="locations__item-link tabs__item" href="#">
-          <span>{city}</span>
-        </a>);
-    }
-  };
   return (
     <div className="tabs">
       <section className="locations container">
@@ -33,7 +20,9 @@ function CityList({cities}: CityListProps) : JSX.Element {
                   dispatch(changeCity(city));
                 }} key={city} className="locations__item"
                 >
-                  {cityItem(city)}
+                  <a className={`locations__item-link tabs__item ${city === activeCity ? 'tabs__item--active' : '' }`} href="#">
+                    <span>{city}</span>
+                  </a>
                 </li>
               ),
             )
