@@ -30,3 +30,9 @@ export type Offer = {
   mapCoordinates: string[],
   otherPlacesId: number[]
 }
+
+export type City = {
+  city: string,
+  offers: Offer[],
+  offerCount: number,
+}

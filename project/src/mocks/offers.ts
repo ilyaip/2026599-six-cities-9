@@ -1,4 +1,4 @@
-import { Offer } from '../types/offer';
+import { Offer, City } from '../types/offer';
 
 export const offers: Offer[] = [
   {
@@ -144,5 +144,38 @@ export const offers: Offer[] = [
     ],
     mapCoordinates: ['52.3809553943508', '4.939309666406198'],
     otherPlacesId: [2, 3, 4],
+  },
+];
+
+export const cities: City[] = [
+  {
+    city: 'Paris',
+    offers: offers,
+    offerCount: 111,
+  },
+  {
+    city: 'Cologne',
+    offers: offers,
+    offerCount: 1,
+  },
+  {
+    city: 'Brussels',
+    offers: offers,
+    offerCount: 23,
+  },
+  {
+    city: 'Amsterdam',
+    offers: offers,
+    offerCount: 7,
+  },
+  {
+    city: 'Hamburg',
+    offers: offers,
+    offerCount: 13,
+  },
+  {
+    city: 'Dusseldorf',
+    offers: offers,
+    offerCount: 66,
   },
 ];
