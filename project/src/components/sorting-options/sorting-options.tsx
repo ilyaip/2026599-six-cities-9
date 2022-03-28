@@ -5,8 +5,6 @@ import { changeSort } from '../../store/action';
 
 function SortingOptions() : JSX.Element {
   const dispatch = useAppDispatch();
-  // eslint-disable-next-line no-console
-  console.log('dispatch: ', dispatch);
 
   const {activeSort} = useAppSelector((state) => state);
 
