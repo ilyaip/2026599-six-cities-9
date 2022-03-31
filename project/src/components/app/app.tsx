@@ -5,27 +5,36 @@ import PrivateRoute from '../private-route/private-route';
 import RegistrationScreen from '../registration-screen/registration-screen';
 import RoomScreen from '../room-screen/room-screen';
 import WelcomeScreen from '../welcome-screen/welcome-screen';
-import {Offer} from '../../types/offer';
-import { AppRoute } from '../../const';
+// import {Offer} from '../../types/offer';
+import { AppRoute, AuthorizationStatus } from '../../const';
+import { useAppSelector } from '../../hooks';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 type AppScreenProps = {
   rentalOffers: number;
-  offers: Offer[];
+  // offers: Offer[];
 }
 
-function App({rentalOffers, offers} : AppScreenProps): JSX.Element {
+function App({rentalOffers} : AppScreenProps): JSX.Element {
+  const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean => authorizationStatus === AuthorizationStatus.Unknown;
+  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+  if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<WelcomeScreen rentalOffers={rentalOffers} offers={offers} />} />
+        <Route index element={<WelcomeScreen rentalOffers={rentalOffers} />} />
         <Route path={AppRoute.Login} element={<RegistrationScreen />} />
         <Route path={AppRoute.Favorites} element={
           <PrivateRoute>
-            <FavoriteOffersScreen offers={offers} />
+            <FavoriteOffersScreen/>
           </PrivateRoute>
         }
         />
-        <Route path={AppRoute.Offer} element={<RoomScreen offers={offers} />} />
+        <Route path={AppRoute.Offer} element={<RoomScreen />} />
         <Route path='*' element={<Screen404 />} />
 
       </Routes>

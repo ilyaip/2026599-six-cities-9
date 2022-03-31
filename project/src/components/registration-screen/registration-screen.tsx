@@ -1,8 +1,16 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { createAPI } from '../../services/api';
 import Header from '../header/header';
 
 function RegistrationScreen() : JSX.Element {
+
+  createAPI().get('/hotels/1').then((res) => {
+    // eslint-disable-next-line no-console
+    console.log('res: ', res.data);
+
+  });
+
   return (
     <div className="page page--gray page--login">
       <Header isLoginPage />

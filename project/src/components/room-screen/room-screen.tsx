@@ -1,22 +1,27 @@
-import {useParams} from 'react-router-dom';
-import { Offer } from '../../types/offer';
-import CommentForm from '../comment-form/comment-form';
+// import {useParams} from 'react-router-dom';
+// import { Offer } from '../../types/offer';
+// import CommentForm from '../comment-form/comment-form';
 import { Link } from 'react-router-dom';
 import Header from '../header/header';
 import { nanoid } from 'nanoid';
 import { Navigate } from 'react-router';
 import { ratingCalculation } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { store } from '../../store';
+import { fetchActiveOfferAction } from '../../store/api-actions';
 
 
-type RoomScreenProps = {
-  offers: Offer[]
-}
+// type RoomScreenProps = {
+//   offers: Offer[]
+// }
 
-function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
-  const params = useParams();
-  const curId : string | undefined = params.id;
-  const curOffer: Offer| undefined = offers.find((item) => item.id === Number(curId!));
-  if (!curOffer) {
+function RoomScreen() : JSX.Element {
+  // const params = useParams();
+  // const curId : string | undefined = params.id;
+  // const curOffer: Offer| undefined = offers.find((item) => item.id === Number(curId!));
+  store.dispatch(fetchActiveOfferAction());
+  const activeOffer = useAppSelector((state) => state.activeOffer);
+  if (!activeOffer) {
     return <Navigate to="*" />;
   }
 
@@ -29,7 +34,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               {
-                curOffer.photosSrc.map((image) =>
+                activeOffer.images.map((image) =>
                   (
                     <div key={nanoid(5)} className="property__image-wrapper">
                       <img className="property__image" src={image} alt="Photo studio" />
@@ -41,12 +46,14 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>{curOffer.premium}</span>
-              </div>
+              {activeOffer.isPremium ?
+                <div className="property__mark">
+                  <span>premium</span>
+                </div>
+                : null}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  {curOffer.title}
+                  {activeOffer.title}
                 </h1>
                 <button className="property__bookmark-button button" type="button">
                   <svg className="property__bookmark-icon" width="31" height="33">
@@ -57,31 +64,31 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: ratingCalculation(curOffer.rating)}}></span>
+                  <span style={{width: ratingCalculation(activeOffer.rating)}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{curOffer.rating}</span>
+                <span className="property__rating-value rating__value">{activeOffer.rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {curOffer.roomType}
+                  {activeOffer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {curOffer.numberOfRooms} Bedrooms
+                  {activeOffer.bedrooms} Bedrooms
                 </li>
                 <li className="property__feature property__feature--adults">
-                  Max {curOffer.numberOfGuests} adults
+                  Max {activeOffer.maxAdults} adults
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{curOffer.price}</b>
+                <b className="property__price-value">&euro;{activeOffer.price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
                   {
-                    curOffer.roomService.map((item) =>
+                    activeOffer.goods.map((item) =>
                       (
                         <li key={nanoid(5)} className="property__inside-item">
                           {item}
@@ -95,22 +102,22 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={curOffer.host.userPhotoSrc} width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={activeOffer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {curOffer.host.userName}
+                    {activeOffer.host.name}
                   </span>
                   <span className="property__user-status">
-                    {curOffer.host.userStatus}
+                    {activeOffer.host.isPro}
                   </span>
                 </div>
                 <div className="property__description">
                   <p className="property__text">
-                    {curOffer.host.offerDesc}
+                    {activeOffer.description}
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
+              {/* <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{curOffer.reviews.length}</span></h2>
                 <ul className="reviews__list">
                   {
@@ -143,7 +150,7 @@ function RoomScreen({offers} : RoomScreenProps) : JSX.Element {
                   }
                 </ul>
                 <CommentForm></CommentForm>
-              </section>
+              </section> */}
             </div>
           </div>
           <section className="property__map map"></section>

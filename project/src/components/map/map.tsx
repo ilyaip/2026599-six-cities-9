@@ -3,9 +3,10 @@ import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import useMap from '../../hooks/useMap';
+import { useAppSelector } from '../../hooks';
 
 type MapProps = {
-  offers: Offer[];
+  // offers: Offer[];
   selectedPoint?: Offer
 }
 
@@ -14,9 +15,11 @@ const URL_MARKER_DEFAULT = '../../../img/pin.svg';
 const URL_MARKER_CURRENT = '../../../img/pin-active.svg';
 
 
-function Map({offers, selectedPoint}: MapProps) : JSX.Element {
+function Map({selectedPoint}: MapProps) : JSX.Element {
+  const loadedOffers = useAppSelector((state) => state.loadedOffers);
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, offers[0]);
+  const map = useMap(mapRef, loadedOffers[0].city);
 
   const defaultCustomIcon = new Icon({
     iconUrl: URL_MARKER_DEFAULT,
@@ -32,10 +35,10 @@ function Map({offers, selectedPoint}: MapProps) : JSX.Element {
 
   useEffect(() => {
     if (map) {
-      offers.forEach((item) => {
+      loadedOffers.forEach((item: Offer) => {
         const marker = new Marker({
-          lat: +item.mapCoordinates[0],
-          lng: +item.mapCoordinates[1],
+          lat: +item.location.latitude,
+          lng: +item.location.longitude,
         });
         marker
           .setIcon(
@@ -46,7 +49,7 @@ function Map({offers, selectedPoint}: MapProps) : JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offers, selectedPoint]);
+  }, [map, loadedOffers, selectedPoint]);
   return (
     <section className="cities__map map" ref={mapRef}></section>
   );
