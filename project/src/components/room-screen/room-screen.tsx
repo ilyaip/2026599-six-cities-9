@@ -5,9 +5,10 @@ import { nanoid } from 'nanoid';
 import { Navigate } from 'react-router';
 import { ratingCalculation } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchActiveOfferAction } from '../../store/api-actions';
+import { fetchActiveOfferAction, fetchCommentsAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
+import CommentForm from '../comment-form/comment-form';
 
 function RoomScreen() : JSX.Element {
   const params = useParams();
@@ -15,18 +16,15 @@ function RoomScreen() : JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const { activeOffer, isLoading} = useAppSelector((state) => state);
+  const { comments, activeOffer, isLoading, authorizationStatus} = useAppSelector((state) => state);
 
   useEffect(() => {
+    (async()=> await dispatch(fetchCommentsAction(curId)))();
     (async()=> await dispatch(fetchActiveOfferAction(curId)))();
   }, []);
 
   if (isLoading) {
     return <ClipLoader/>;
-  }
-
-  if (!isLoading && !activeOffer) {
-    return <Navigate to="*" />;
   }
 
   if (!activeOffer) {
@@ -125,40 +123,44 @@ function RoomScreen() : JSX.Element {
                   </p>
                 </div>
               </div>
-              {/* <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{curOffer.reviews.length}</span></h2>
-                <ul className="reviews__list">
-                  {
-                    curOffer.reviews.map((review) =>
-                      (
-                        <li key={nanoid(5)} className="reviews__item">
-                          <div className="reviews__user user">
-                            <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                              <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
-                            </div>
-                            <span className="reviews__user-name">
-                              {review.userName}
-                            </span>
-                          </div>
-                          <div className="reviews__info">
-                            <div className="reviews__rating rating">
-                              <div className="reviews__stars rating__stars">
-                                <span style={{width: ratingCalculation(review.userRating)}}></span>
-                                <span className="visually-hidden">Rating</span>
+              {comments ?
+                <section className="property__reviews reviews">
+                  <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
+                  <ul className="reviews__list">
+                    {
+                      comments.map((comment) =>
+                        (
+                          <li key={comment.id} className="reviews__item">
+                            <div className="reviews__user user">
+                              <div className="reviews__avatar-wrapper user__avatar-wrapper">
+                                <img className="reviews__avatar user__avatar" src={comment.user.avatarUrl} width="54" height="54" alt="Reviews avatar" />
                               </div>
+                              <span className="reviews__user-name">
+                                {comment.user.name}
+                              </span>
                             </div>
-                            <p className="reviews__text">
-                              {review.review}
-                            </p>
-                            <time className="reviews__time" dateTime="2019-04-24">{review.reviewDate}</time>
-                          </div>
-                        </li>
-                      ),
-                    )
-                  }
-                </ul>
-                <CommentForm></CommentForm>
-              </section> */}
+                            <div className="reviews__info">
+                              <div className="reviews__rating rating">
+                                <div className="reviews__stars rating__stars">
+                                  <span style={{width: ratingCalculation(comment.rating)}}></span>
+                                  <span className="visually-hidden">Rating</span>
+                                </div>
+                              </div>
+                              <p className="reviews__text">
+                                {comment.comment}
+                              </p>
+                              <time className="reviews__time" dateTime="2019-04-24">{comment.date}</time>
+                            </div>
+                          </li>
+                        ),
+                      )
+                    }
+                  </ul>
+                  {authorizationStatus === 'AUTH' ?
+                    <CommentForm/>
+                    : ''}
+                </section>
+                : ''}
             </div>
           </div>
           <section className="property__map map"></section>

@@ -1,18 +1,9 @@
-type Host = {
+type User = {
   id: number,
   name: string,
   isPro: boolean,
   avatarUrl: string,
-  // userPhotoSrc: string,
-  // offerDesc: string
 }
-
-// type Review = {
-//   userName: string,
-//   userRating: number,
-//   review: string,
-//   reviewDate: string
-// }
 
 type location = {
   latitude: number,
@@ -23,6 +14,14 @@ type location = {
 export type City = {
   name: string,
   location: location,
+}
+
+export type Comment = {
+  comment: string,
+  date: string,
+  id: number,
+  rating: number,
+  user: User
 }
 
 export type Offer = {
@@ -38,7 +37,7 @@ export type Offer = {
   maxAdults: number,
   price: number,
   goods: string[],
-  host: Host,
+  host: User,
   description: string,
   location: location,
   id: number,

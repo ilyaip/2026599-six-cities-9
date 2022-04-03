@@ -1,8 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
-import {Offer} from '../types/offer';
-import { loadActiveOffer, loadOffers, requireAuthorization, setError, setLoading} from './action';
+import {Offer, Comment} from '../types/offer';
+import { addComment, loadActiveOffer, loadComments, loadOffers, requireAuthorization, setError, setLoading} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {AuthData} from '../types/auth-data';
@@ -48,6 +48,18 @@ export const fetchActiveOfferAction = createAsyncThunk(
   },
 );
 
+export const fetchCommentsAction = createAsyncThunk(
+  'data/fetchComments',
+  async (id: string | undefined) => {
+    try {
+      const {data} = await api.get<Comment[]>(`/comments/${id}`);
+      store.dispatch(loadComments(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
 export const checkAuthAction = createAsyncThunk(
   'user/checkAuth',
   async () => {
@@ -71,6 +83,18 @@ export const loginAction = createAsyncThunk(
     } catch (error) {
       errorHandle(error);
       store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    }
+  },
+);
+
+export const addCommentAction = createAsyncThunk(
+  'data/addComment',
+  async ({comment, rating, hotelId}: any) => {
+    try {
+      const {data} = await api.post<any>(`/comments/${hotelId}`, {comment, rating});
+      store.dispatch(addComment(data));
+    } catch (error) {
+      errorHandle(error);
     }
   },
 );

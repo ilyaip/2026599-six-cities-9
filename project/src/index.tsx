@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
 import ErrorMessage from './components/error-message/error-message';
-// import { offers } from './mocks/offers';
 import { store } from './store';
 import { checkAuthAction, fetchOfferAction } from './store/api-actions';
 

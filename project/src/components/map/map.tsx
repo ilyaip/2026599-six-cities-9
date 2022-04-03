@@ -6,7 +6,6 @@ import useMap from '../../hooks/useMap';
 import { useAppSelector } from '../../hooks';
 
 type MapProps = {
-  // offers: Offer[];
   selectedPoint?: Offer
 }
 

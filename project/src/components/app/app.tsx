@@ -5,7 +5,6 @@ import PrivateRoute from '../private-route/private-route';
 import RegistrationScreen from '../registration-screen/registration-screen';
 import RoomScreen from '../room-screen/room-screen';
 import WelcomeScreen from '../welcome-screen/welcome-screen';
-// import {Offer} from '../../types/offer';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
