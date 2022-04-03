@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
 import {Offer} from '../types/offer';
-import {loadActiveOffer, loadOffers, requireAuthorization, setError} from './action';
+import { loadActiveOffer, loadOffers, requireAuthorization, setError, setLoading} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {AuthData} from '../types/auth-data';
@@ -27,18 +27,23 @@ export const fetchOfferAction = createAsyncThunk(
       store.dispatch(loadOffers(data));
     } catch (error) {
       errorHandle(error);
+    } finally {
+      store.dispatch(setLoading(false));
     }
   },
 );
 
 export const fetchActiveOfferAction = createAsyncThunk(
-  'data/fetchOffers',
-  async () => {
+  'data/fetchActiveOffers',
+  async (id: string | undefined) => {
     try {
-      const {data} = await api.get<Offer>('/hotels/1');
+      store.dispatch(setLoading(true));
+      const {data} = await api.get<Offer>(`/hotels/${id}`);
       store.dispatch(loadActiveOffer(data));
     } catch (error) {
       errorHandle(error);
+    } finally {
+      store.dispatch(setLoading(false));
     }
   },
 );

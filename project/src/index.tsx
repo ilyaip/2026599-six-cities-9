@@ -10,16 +10,12 @@ import { checkAuthAction, fetchOfferAction } from './store/api-actions';
 store.dispatch(fetchOfferAction());
 store.dispatch(checkAuthAction());
 
-const Settings = {
-  RENTAL_OFFERS: 123,
-};
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ErrorMessage/>
-      <App
-        rentalOffers = {Settings.RENTAL_OFFERS}
-      />
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));

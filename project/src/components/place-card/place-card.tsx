@@ -1,6 +1,8 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { ratingCalculation } from '../../const';
+import { useAppDispatch } from '../../hooks';
+import { setLoading } from '../../store/action';
 
 type PlaceCardProps = {
   offer: Offer | any;
@@ -14,6 +16,8 @@ function PlaceCard({offer, onListItemHover}: PlaceCardProps) : JSX.Element {
       onListItemHover(offer.title);
     }
   };
+
+  const dispatch = useAppDispatch();
 
   return (
     <article className="cities__place-card place-card" onMouseEnter={listItemHoverHandler}>
@@ -47,7 +51,7 @@ function PlaceCard({offer, onListItemHover}: PlaceCardProps) : JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={`offer/${offer.id}`} onClick={() => {dispatch(setLoading(true));}}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

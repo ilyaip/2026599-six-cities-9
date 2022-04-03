@@ -10,12 +10,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-type AppScreenProps = {
-  rentalOffers: number;
-  // offers: Offer[];
-}
-
-function App({rentalOffers} : AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean => authorizationStatus === AuthorizationStatus.Unknown;
   const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
@@ -26,7 +21,7 @@ function App({rentalOffers} : AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<WelcomeScreen rentalOffers={rentalOffers} />} />
+        <Route index element={<WelcomeScreen />} />
         <Route path={AppRoute.Login} element={<RegistrationScreen />} />
         <Route path={AppRoute.Favorites} element={
           <PrivateRoute>

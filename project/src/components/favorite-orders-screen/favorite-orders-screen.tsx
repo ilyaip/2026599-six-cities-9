@@ -1,12 +1,7 @@
-// import { Offer } from '../../types/offer';
 import OfferList from '../offer-list/offer-list';
 import { Link } from 'react-router-dom';
 import Header from '../header/header';
 import { AppRoute } from '../../const';
-
-// type FavoriteOffersScreenProps = {
-//   offers: Offer[];
-// }
 
 function FavoriteOffersScreen() : JSX.Element {
   return (

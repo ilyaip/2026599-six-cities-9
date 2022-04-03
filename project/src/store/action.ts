@@ -17,3 +17,6 @@ export const setError = createAction<string>('game/setError');
 
 export const loadActiveOffer = createAction<Offer>('data/loadActiveOffer');
 
+export const setLoading = createAction<boolean>('data/setLoading');
+
+

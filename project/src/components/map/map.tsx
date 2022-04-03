@@ -16,7 +16,7 @@ const URL_MARKER_CURRENT = '../../../img/pin-active.svg';
 
 
 function Map({selectedPoint}: MapProps) : JSX.Element {
-  const loadedOffers = useAppSelector((state) => state.loadedOffers);
+  const { loadedOffers, activeCity} = useAppSelector((state) => state);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, loadedOffers[0].city);
@@ -42,14 +42,14 @@ function Map({selectedPoint}: MapProps) : JSX.Element {
         });
         marker
           .setIcon(
-            selectedPoint !== undefined && item.title === selectedPoint.title
+            selectedPoint !== undefined && item.id === selectedPoint.id
               ? currentCustomIcon
               : defaultCustomIcon,
           )
           .addTo(map);
       });
     }
-  }, [map, loadedOffers, selectedPoint]);
+  }, [map, activeCity, selectedPoint]);
   return (
     <section className="cities__map map" ref={mapRef}></section>
   );

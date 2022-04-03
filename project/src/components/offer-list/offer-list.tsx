@@ -1,14 +1,18 @@
 import PlaceCard from '../place-card/place-card';
 import { Offer } from '../../types/offer';
 import { useAppSelector } from '../../hooks';
+import ClipLoader from 'react-spinners/ClipLoader';
+
 
 type OfferListProps = {
-  // offers: Offer[];
   onListItemHover?: (listItemName: string) => void;
 }
 
 function OfferList({onListItemHover}: OfferListProps) : JSX.Element {
-  const loadedOffers = useAppSelector((state) => state.loadedOffers);
+  const {loadedOffers, isLoading} = useAppSelector((state) => state);
+  if (isLoading) {
+    return <ClipLoader/>;
+  }
 
 
   return (

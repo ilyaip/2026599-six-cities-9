@@ -1,26 +1,34 @@
-// import {useParams} from 'react-router-dom';
-// import { Offer } from '../../types/offer';
-// import CommentForm from '../comment-form/comment-form';
+import {useParams} from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Header from '../header/header';
 import { nanoid } from 'nanoid';
 import { Navigate } from 'react-router';
 import { ratingCalculation } from '../../const';
-import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchActiveOfferAction } from '../../store/api-actions';
-
-
-// type RoomScreenProps = {
-//   offers: Offer[]
-// }
+import { useEffect } from 'react';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 function RoomScreen() : JSX.Element {
-  // const params = useParams();
-  // const curId : string | undefined = params.id;
-  // const curOffer: Offer| undefined = offers.find((item) => item.id === Number(curId!));
-  store.dispatch(fetchActiveOfferAction());
-  const activeOffer = useAppSelector((state) => state.activeOffer);
+  const params = useParams();
+  const curId : string | undefined = params.id;
+
+  const dispatch = useAppDispatch();
+
+  const { activeOffer, isLoading} = useAppSelector((state) => state);
+
+  useEffect(() => {
+    (async()=> await dispatch(fetchActiveOfferAction(curId)))();
+  }, []);
+
+  if (isLoading) {
+    return <ClipLoader/>;
+  }
+
+  if (!isLoading && !activeOffer) {
+    return <Navigate to="*" />;
+  }
+
   if (!activeOffer) {
     return <Navigate to="*" />;
   }

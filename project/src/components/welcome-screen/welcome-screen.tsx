@@ -7,14 +7,9 @@ import CityList from '../city-list/city-list';
 import { useAppSelector } from '../../hooks';
 import SortingOptions from '../sorting-options/sorting-options';
 
-type WelcomeScreenProps = {
-  rentalOffers: number;
-  // offers: Offer[];
-}
-
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
-function WelcomeScreen({rentalOffers} : WelcomeScreenProps) : JSX.Element {
+function WelcomeScreen() : JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
 
   const {loadedOffers, activeCity} = useAppSelector((state) => state);
