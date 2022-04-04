@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
 import {Offer, Comment} from '../types/offer';
-import { addComment, loadActiveOffer, loadComments, loadOffers, requireAuthorization, setError, setLoading} from './action';
+import { addComment, loadActiveOffer, loadComments, loadFavorites, loadOffers, requireAuthorization, setError, setLoading, toggleFavorite} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {AuthData} from '../types/auth-data';
@@ -54,6 +54,30 @@ export const fetchCommentsAction = createAsyncThunk(
     try {
       const {data} = await api.get<Comment[]>(`/comments/${id}`);
       store.dispatch(loadComments(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchFavoriteOffersAction = createAsyncThunk(
+  'data/fetchFavorites',
+  async () => {
+    try {
+      const {data} = await api.get<Offer[]>('/favorite');
+      store.dispatch(loadFavorites(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchToggleFavoriteAction = createAsyncThunk(
+  'data/toggleFavorite',
+  async ({hotelId, status} : any) => {
+    try {
+      const {data} = await api.post<Offer>(`/favorite/${hotelId}/${status}`);
+      store.dispatch(toggleFavorite(data));
     } catch (error) {
       errorHandle(error);
     }

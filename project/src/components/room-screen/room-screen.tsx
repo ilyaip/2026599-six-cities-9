@@ -5,7 +5,7 @@ import { nanoid } from 'nanoid';
 import { Navigate } from 'react-router';
 import { ratingCalculation } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { fetchActiveOfferAction, fetchCommentsAction } from '../../store/api-actions';
+import { fetchActiveOfferAction, fetchCommentsAction, fetchToggleFavoriteAction } from '../../store/api-actions';
 import { useEffect } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import CommentForm from '../comment-form/comment-form';
@@ -22,6 +22,12 @@ function RoomScreen() : JSX.Element {
     (async()=> await dispatch(fetchCommentsAction(curId)))();
     (async()=> await dispatch(fetchActiveOfferAction(curId)))();
   }, []);
+
+  const addFavoriteHandler = () => {
+    const status = activeOffer!.isFavorite ? 0 : 1;
+
+    dispatch(fetchToggleFavoriteAction({hotelId: curId, status}));
+  };
 
   if (isLoading) {
     return <ClipLoader/>;
@@ -61,12 +67,15 @@ function RoomScreen() : JSX.Element {
                 <h1 className="property__name">
                   {activeOffer.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                {authorizationStatus === 'AUTH' ?
+                  <button onClick={addFavoriteHandler} className={activeOffer.isFavorite ? 'property__bookmark-button button property__bookmark-button--active' : 'property__bookmark-button button'} type="button">
+                    <svg className="property__bookmark-icon" width="31" height="33">
+                      <use xlinkHref="#icon-bookmark"></use>
+                    </svg>
+                    <span className="visually-hidden">To bookmarks</span>
+                  </button>
+                  :
+                  ''}
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
