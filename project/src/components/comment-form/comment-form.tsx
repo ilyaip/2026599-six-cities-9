@@ -1,5 +1,7 @@
-import {useState, ChangeEvent, Fragment} from 'react';
+import {useState, ChangeEvent, Fragment, FormEvent} from 'react';
 import { nanoid } from 'nanoid';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { addCommentAction } from '../../store/api-actions';
 
 const RATING_STARS = [5, 4, 3, 2, 1];
 
@@ -9,8 +11,20 @@ function CommentForm() : JSX.Element {
     desc: '',
   });
 
+  const dispatch = useAppDispatch();
+  const { activeOffer } = useAppSelector((state) => state);
+
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (userComment.userRating !== null && userComment.desc.length > 0) {
+      dispatch(addCommentAction({comment: userComment.desc, rating: userComment.userRating, hotelId: activeOffer!.id }));
+    }
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
@@ -47,7 +61,7 @@ function CommentForm() : JSX.Element {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={Boolean(!userComment.desc)}>Submit</button>
       </div>
     </form>
   );

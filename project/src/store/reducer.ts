@@ -1,34 +1,76 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSort } from './action';
-import { cities } from '../mocks/offers';
+import { changeCity, setLoading, changeSort, loadActiveOffer, loadOffers, requireAuthorization, setError, loadComments, addComment } from './action';
+import { AuthorizationStatus } from '../const';
+import { Offer, Comment } from '../types/offer';
 
+type InitalState = {
+  activeCity: string,
+  activeSort: string,
+  loadedOffers: Offer[],
+  loadedOffersCopy: Offer[],
+  authorizationStatus: AuthorizationStatus,
+  error: string,
+  isDataLoaded: boolean,
+  activeOffer: Offer | null,
+  isLoading: boolean,
+  comments: Comment[],
+}
 
-const initialState = {
+const initialState: InitalState = {
   activeCity: 'Paris',
-  activeCityObj: cities[0],
-  activeCityObjCopy: cities[0],
   activeSort: 'Popular',
+  loadedOffers: [],
+  loadedOffersCopy: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: '',
+  isDataLoaded: false,
+  activeOffer: null,
+  isLoading: true,
+  comments: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(changeCity, (state, action) => {
       state.activeCity = action.payload;
-      state.activeCityObj = cities.filter((item) => item.city === action.payload)[0];
-      state.activeCityObjCopy = cities.filter((item) => item.city === action.payload)[0];
+      state.loadedOffers = state.loadedOffersCopy.filter((item) => item.city.name === action.payload);
     })
     .addCase(changeSort, (state, action) => {
       state.activeSort = action.payload;
       switch(action.payload) {
-        case 'Popular': state.activeCityObj.offers = state.activeCityObjCopy.offers;
+        case 'Popular': state.loadedOffers = state.loadedOffersCopy.filter((item) => item.city.name === state.activeCity);
           break;
-        case 'Price: low to high': state.activeCityObj.offers = state.activeCityObj.offers.sort((a, b) => a.price - b.price);
+        case 'Price: low to high': state.loadedOffers = state.loadedOffers.sort((a, b) => a.price - b.price);
           break;
-        case 'Price: high to low': state.activeCityObj.offers = state.activeCityObj.offers.sort((a, b) => b.price - a.price);
+        case 'Price: high to low': state.loadedOffers = state.loadedOffers.sort((a, b) => b.price - a.price);
           break;
-        case 'Top rated first': state.activeCityObj.offers = state.activeCityObj.offers.sort((a, b) => b.rating - a.rating);
+        case 'Top rated first': state.loadedOffers = state.loadedOffers.sort((a, b) => b.rating - a.rating);
           break;
       }
+    })
+    .addCase(loadOffers, (state, action) => {
+      state.loadedOffers = action.payload;
+      state.loadedOffers = state.loadedOffers.filter((item) => item.city.name === 'Paris');
+      state.loadedOffersCopy = action.payload;
+      state.isDataLoaded = true;
+    })
+    .addCase(loadActiveOffer, (state, action) => {
+      state.activeOffer = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
+    })
+    .addCase(setLoading, (state, action) => {
+      state.isLoading = action.payload;
+    })
+    .addCase(loadComments, (state, action) => {
+      state.comments = action.payload;
+    })
+    .addCase(addComment, (state, action) => {
+      state.comments = action.payload;
     });
 });
 

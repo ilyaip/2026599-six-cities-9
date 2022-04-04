@@ -1,38 +1,44 @@
-type Host = {
-  userName: string,
-  userStatus: string,
-  userPhotoSrc: string,
-  offerDesc: string
-}
-
-type Review = {
-  userName: string,
-  userRating: number,
-  review: string,
-  reviewDate: string
-}
-
-export type Offer = {
+type User = {
   id: number,
-  title: string,
-  desc: string,
-  premium: string,
-  isFavorite: boolean,
-  photosSrc: string[],
-  roomType: string,
-  rating: number,
-  numberOfRooms: number,
-  numberOfGuests: number,
-  price: number,
-  roomService: string[],
-  host: Host,
-  reviews: Review[],
-  mapCoordinates: string[],
-  otherPlacesId: number[]
+  name: string,
+  isPro: boolean,
+  avatarUrl: string,
+}
+
+type location = {
+  latitude: number,
+  longitude: number,
+  zoom: number
 }
 
 export type City = {
-  city: string,
-  offers: Offer[],
-  offerCount: number,
+  name: string,
+  location: location,
+}
+
+export type Comment = {
+  comment: string,
+  date: string,
+  id: number,
+  rating: number,
+  user: User
+}
+
+export type Offer = {
+  city: City,
+  previewImage: string,
+  images: string[],
+  title: string,
+  isFavorite: boolean,
+  isPremium: boolean,
+  rating: number,
+  type: string,
+  bedrooms: number,
+  maxAdults: number,
+  price: number,
+  goods: string[],
+  host: User,
+  description: string,
+  location: location,
+  id: number,
 }

@@ -2,19 +2,19 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { offers } from './mocks/offers';
+import ErrorMessage from './components/error-message/error-message';
 import { store } from './store';
+import { checkAuthAction, fetchOfferAction } from './store/api-actions';
 
-const Settings = {
-  RENTAL_OFFERS: 123,
-};
+store.dispatch(fetchOfferAction());
+store.dispatch(checkAuthAction());
+
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App
-        rentalOffers = {Settings.RENTAL_OFFERS}
-        offers = {offers}
-      />
+      <ErrorMessage/>
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root'));
