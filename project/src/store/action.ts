@@ -19,8 +19,10 @@ export const loadActiveOffer = createAction<Offer>('data/loadActiveOffer');
 
 export const loadComments = createAction<Comment[]>('data/loadComments');
 
+export const loadFavorites = createAction<Offer[]>('data/loadFavorites');
+
 export const addComment = createAction<any>('data/addComment');
 
 export const setLoading = createAction<boolean>('data/setLoading');
 
-
+export const toggleFavorite = createAction<Offer>('data/toggleFavorite');
