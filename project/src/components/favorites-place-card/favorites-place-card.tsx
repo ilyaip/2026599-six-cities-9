@@ -1,16 +1,11 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { ratingCalculation } from '../../const';
-import { useAppDispatch } from '../../hooks';
-import { setLoading } from '../../store/action';
-
 type FavoritesPlaceCardProps = {
   offer: Offer;
 }
 
 function FavoritesPlaceCard({offer}: FavoritesPlaceCardProps) : JSX.Element {
-
-  const dispatch = useAppDispatch();
 
   return (
     <article className="cities__place-card place-card">
@@ -44,7 +39,7 @@ function FavoritesPlaceCard({offer}: FavoritesPlaceCardProps) : JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${offer.id}`} onClick={() => {dispatch(setLoading(true));}}>{offer.title}</Link>
+          <Link to={`offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

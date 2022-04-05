@@ -6,7 +6,7 @@ import { Navigate } from 'react-router';
 import { ratingCalculation } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { fetchActiveOfferAction, fetchCommentsAction, fetchToggleFavoriteAction } from '../../store/api-actions';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ClipLoader from 'react-spinners/ClipLoader';
 import CommentForm from '../comment-form/comment-form';
 
@@ -16,11 +16,12 @@ function RoomScreen() : JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const { comments, activeOffer, isLoading, authorizationStatus} = useAppSelector((state) => state);
+  const { comments, activeOffer, authorizationStatus} = useAppSelector((state) => state);
+
+  const [isLoading, setLoading ] = useState(true);
 
   useEffect(() => {
-    (async()=> await dispatch(fetchCommentsAction(curId)))();
-    (async()=> await dispatch(fetchActiveOfferAction(curId)))();
+    Promise.all([dispatch(fetchCommentsAction(curId)), dispatch(fetchActiveOfferAction(curId))]).finally( () => setLoading(false));
   }, []);
 
   const addFavoriteHandler = () => {
