@@ -13,7 +13,7 @@ export const loadOffers = createAction<Offer[]>('data/loadOffers');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 
-export const setError = createAction<string>('game/setError');
+export const setError = createAction<string>('user/setError');
 
 export const loadActiveOffer = createAction<Offer>('data/loadActiveOffer');
 
@@ -26,3 +26,5 @@ export const addComment = createAction<any>('data/addComment');
 export const setLoading = createAction<boolean>('data/setLoading');
 
 export const toggleFavorite = createAction<Offer>('data/toggleFavorite');
+
+export const loadNearbyOffers = createAction<Offer[]>('data/loadNearbyOffers');

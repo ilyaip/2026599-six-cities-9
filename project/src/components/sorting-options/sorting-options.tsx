@@ -1,11 +1,11 @@
 import { useState } from 'react';
+import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeSort } from '../../store/action';
 
 
 function SortingOptions() : JSX.Element {
   const dispatch = useAppDispatch();
-
   const {activeSort} = useAppSelector((state) => state);
 
   const [isOpened, setOpened] = useState(false);
@@ -29,4 +29,4 @@ function SortingOptions() : JSX.Element {
   );
 }
 
-export default SortingOptions;
+export default React.memo(SortingOptions);

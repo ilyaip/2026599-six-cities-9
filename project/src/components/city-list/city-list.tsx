@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
+import React from 'react';
 
 type CityListProps = {
   cities: string[];
@@ -32,4 +33,4 @@ function CityList({cities}: CityListProps) : JSX.Element {
     </div>
   );
 }
-export default CityList;
+export default React.memo(CityList);

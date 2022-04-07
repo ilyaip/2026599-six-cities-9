@@ -2,7 +2,7 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import {api} from '../store';
 import {store} from '../store';
 import {Offer, Comment} from '../types/offer';
-import { addComment, loadActiveOffer, loadComments, loadFavorites, loadOffers, requireAuthorization, setError, setLoading, toggleFavorite} from './action';
+import { addComment, loadActiveOffer, loadComments, loadFavorites, loadNearbyOffers, loadOffers, requireAuthorization, setError, setLoading, toggleFavorite} from './action';
 import {saveToken, dropToken} from '../services/token';
 import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {AuthData} from '../types/auth-data';
@@ -54,6 +54,18 @@ export const fetchCommentsAction = createAsyncThunk(
     try {
       const {data} = await api.get<Comment[]>(`/comments/${id}`);
       store.dispatch(loadComments(data));
+    } catch (error) {
+      errorHandle(error);
+    }
+  },
+);
+
+export const fetchNearbyOffersAction = createAsyncThunk(
+  'data/fetchNearbyOffersAction',
+  async (id: string | undefined) => {
+    try {
+      const {data} = await api.get<Offer[]>(`/hotels/${id}/nearby`);
+      store.dispatch(loadNearbyOffers(data));
     } catch (error) {
       errorHandle(error);
     }
