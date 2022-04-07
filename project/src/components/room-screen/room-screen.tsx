@@ -1,5 +1,4 @@
 import {useParams} from 'react-router-dom';
-// import { Link } from 'react-router-dom';
 import Header from '../header/header';
 import { nanoid } from 'nanoid';
 import { Navigate } from 'react-router';
@@ -27,8 +26,6 @@ function RoomScreen() : JSX.Element {
   }, [curId]);
 
   const addFavoriteHandler = () => {
-    // eslint-disable-next-line no-console
-    console.log('authorizationStatus: ', authorizationStatus);
     if (authorizationStatus === 'AUTH') {
       const status = activeOffer!.isFavorite ? 0 : 1;
 

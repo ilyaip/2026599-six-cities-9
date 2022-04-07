@@ -23,13 +23,6 @@ function WelcomeScreen() : JSX.Element {
       setSelectedPoint(currentOffer);
     }, [activeCity]);
 
-
-  // const onListItemHover = (listItemName: string) => {
-  //   const currentOffer = loadedOffers.find((offer) => offer.title === listItemName);
-
-  //   setSelectedPoint(currentOffer);
-  // };
-
   return (
     <div className="page page--gray page--main">
       <Header />
