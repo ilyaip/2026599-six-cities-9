@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/api-actions';
+import React from 'react';
 
 type HeaderProps = {
   isLoginPage? : boolean,
@@ -56,4 +57,4 @@ function Header({isLoginPage} : HeaderProps) : JSX.Element {
   );
 }
 
-export default Header;
+export default React.memo(Header);

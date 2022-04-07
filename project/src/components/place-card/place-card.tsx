@@ -1,6 +1,7 @@
 import { Offer } from '../../types/offer';
 import { Link } from 'react-router-dom';
 import { ratingCalculation } from '../../const';
+import React from 'react';
 
 type PlaceCardProps = {
   offer: Offer | any;
@@ -47,7 +48,7 @@ function PlaceCard({offer, onListItemHover}: PlaceCardProps) : JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`offer/${offer.id}`}>{offer.title}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
@@ -55,4 +56,4 @@ function PlaceCard({offer, onListItemHover}: PlaceCardProps) : JSX.Element {
   );
 }
 
-export default PlaceCard;
+export default React.memo(PlaceCard);
