@@ -25,6 +25,11 @@ export enum HTTP_CODE {
   NOT_FOUND = 404,
 }
 
+export enum NameSpace {
+  data = 'DATA',
+  user = 'USER',
+}
+
 export const ratingCalculation = function(userRating: string | number) {
   return `${Number(userRating)*20}%`;
 };

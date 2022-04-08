@@ -11,7 +11,8 @@ import LoadingScreen from '../loading-screen/loading-screen';
 
 function App(): JSX.Element {
   const isCheckedAuth = (authorizationStatus: AuthorizationStatus): boolean => authorizationStatus === AuthorizationStatus.Unknown;
-  const {authorizationStatus, isDataLoaded} = useAppSelector((state) => state);
+  const {isDataLoaded} = useAppSelector(({DATA}) => DATA);
+  const {authorizationStatus} = useAppSelector(({USER}) => USER);
   if (isCheckedAuth(authorizationStatus) || !isDataLoaded) {
     return (
       <LoadingScreen />

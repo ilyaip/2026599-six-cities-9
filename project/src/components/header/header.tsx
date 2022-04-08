@@ -11,7 +11,7 @@ type HeaderProps = {
 function Header({isLoginPage} : HeaderProps) : JSX.Element {
   const dispatch = useAppDispatch();
 
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const { authorizationStatus } = useAppSelector(({USER}) => USER);
 
   return (
     <header className="header">

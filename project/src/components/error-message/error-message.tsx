@@ -1,9 +1,10 @@
 import {useAppSelector} from '../../hooks';
 
 function ErrorMessage(): JSX.Element | null {
-  const {error} = useAppSelector((state) => state);
+  const {error} = useAppSelector(({USER}) => USER);
+  const urlPathname = window.location.pathname;
 
-  if (error) {
+  if (error && urlPathname !== '/') {
     return (
       <div
         style={{

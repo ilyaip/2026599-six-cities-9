@@ -7,7 +7,7 @@ import { fetchFavoriteOffersAction } from '../../store/api-actions';
 
 
 function FavoritesList() : JSX.Element {
-  const {favorites } = useAppSelector((state) => state);
+  const {favorites } = useAppSelector(({DATA}) => DATA);
 
   const dispatch = useAppDispatch();
 
@@ -16,7 +16,7 @@ function FavoritesList() : JSX.Element {
 
   useEffect(() => {
     (async()=> await dispatch(fetchFavoriteOffersAction()))().finally(() => setLoading(false));
-  }, []);
+  }, [dispatch]);
 
 
   if (isLoading) {

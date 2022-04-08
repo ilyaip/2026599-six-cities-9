@@ -14,14 +14,14 @@ const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseld
 function WelcomeScreen() : JSX.Element {
   const [selectedPoint, setSelectedPoint] = useState<Offer | undefined>(undefined);
 
-  const {loadedOffers, activeCity} = useAppSelector((state) => state);
+  const { loadedOffers, activeCity } = useAppSelector(({DATA}) => DATA);
 
   const onListItemHover = React.useCallback(
     (listItemName: string) => {
       const currentOffer = loadedOffers.find((offer) => offer.title === listItemName);
 
       setSelectedPoint(currentOffer);
-    }, [activeCity]);
+    }, [loadedOffers]);
 
   return (
     <div className="page page--gray page--main">
