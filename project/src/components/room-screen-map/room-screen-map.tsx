@@ -7,17 +7,17 @@ import { useAppSelector } from '../../hooks';
 
 const URL_MARKER_DEFAULT = '../../../img/pin.svg';
 
+const defaultCustomIcon = new Icon({
+  iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
 function RoomScreenMap() : JSX.Element {
-  const { activeOffer, nearbyOffers} = useAppSelector((state) => state);
+  const { activeOffer, nearbyOffers} = useAppSelector(({DATA}) => DATA);
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef, activeOffer!.city);
-
-  const defaultCustomIcon = new Icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+  const map = useMap(mapRef, activeOffer?.city);
 
   useEffect(() => {
     if (map) {

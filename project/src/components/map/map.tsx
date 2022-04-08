@@ -14,23 +14,24 @@ const URL_MARKER_DEFAULT = '../../../img/pin.svg';
 const URL_MARKER_CURRENT = '../../../img/pin-active.svg';
 
 
+const defaultCustomIcon = new Icon({
+  iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+
 function Map({selectedPoint}: MapProps) : JSX.Element {
-  const { loadedOffers, activeCity} = useAppSelector((state) => state);
+  const { loadedOffers, activeCity } = useAppSelector(({DATA}) => DATA);
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, loadedOffers[0].city);
-
-  const defaultCustomIcon = new Icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentCustomIcon = new Icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
 
   useEffect(() => {
     if (map) {
@@ -48,7 +49,7 @@ function Map({selectedPoint}: MapProps) : JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, activeCity, selectedPoint]);
+  }, [map, activeCity, selectedPoint, loadedOffers]);
   return (
     <section className="cities__map map" ref={mapRef}></section>
   );

@@ -17,17 +17,18 @@ function RoomScreen() : JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const { comments, activeOffer, authorizationStatus} = useAppSelector((state) => state);
+  const { activeOffer, comments } = useAppSelector(({DATA}) => DATA);
+  const { authorizationStatus} = useAppSelector(({USER}) => USER);
 
   const [isLoading, setLoading ] = useState(true);
 
   useEffect(() => {
     Promise.all([dispatch(fetchCommentsAction(curId)), dispatch(fetchActiveOfferAction(curId)), dispatch(fetchNearbyOffersAction(curId))]).finally( () => setLoading(false));
-  }, [curId]);
+  }, [curId, dispatch]);
 
   const addFavoriteHandler = () => {
     if (authorizationStatus === 'AUTH') {
-      const status = activeOffer!.isFavorite ? 0 : 1;
+      const status = activeOffer?.isFavorite ? 0 : 1;
 
       dispatch(fetchToggleFavoriteAction({hotelId: curId, status}));
     } else {
@@ -56,7 +57,7 @@ function RoomScreen() : JSX.Element {
                 activeOffer.images.map((image) =>
                   (
                     <div key={nanoid(5)} className="property__image-wrapper">
-                      <img className="property__image" src={image} alt="Photo studio" />
+                      <img className="property__image" src={image} alt="studio" />
                     </div>
                   ),
                 )

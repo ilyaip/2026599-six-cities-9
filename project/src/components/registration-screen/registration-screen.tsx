@@ -27,7 +27,7 @@ function RegistrationScreen() : JSX.Element {
       });
     }
   };
-  const { authorizationStatus } = useAppSelector((state) => state);
+  const { authorizationStatus } = useAppSelector(({USER}) => USER);
 
   if (authorizationStatus === 'AUTH') {
     return  <Navigate to={AppRoute.Root} />;

@@ -11,7 +11,7 @@ type OfferListProps = {
 }
 
 function OfferList({onListItemHover}: OfferListProps) : JSX.Element {
-  const {loadedOffers, nearbyOffers, isLoading} = useAppSelector((state) => state);
+  const {loadedOffers, nearbyOffers, isLoading} = useAppSelector(({DATA}) => DATA);
   const {id} = useParams();
   const isRoomScreen = id;
 

@@ -12,14 +12,14 @@ function CommentForm() : JSX.Element {
   });
 
   const dispatch = useAppDispatch();
-  const { activeOffer } = useAppSelector((state) => state);
+  const { activeOffer } = useAppSelector(({DATA}) => DATA);
 
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (userComment.userRating !== null && userComment.desc.length > 0) {
-      dispatch(addCommentAction({comment: userComment.desc, rating: userComment.userRating, hotelId: activeOffer!.id }));
+      dispatch(addCommentAction({comment: userComment.desc, rating: userComment.userRating, hotelId: activeOffer?.id }));
     }
   };
 
