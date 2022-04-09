@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {NameSpace} from '../../const';
+import {NameSpace, SortType} from '../../const';
 import { Offer, Comment } from '../../types/offer';
 
 type InitalState = {
@@ -29,19 +29,19 @@ const initialState: InitalState = {
 };
 
 export const dataProcess = createSlice({
-  name: NameSpace.data,
+  name: NameSpace.Data,
   initialState,
   reducers: {
     changeSort: (state, action) => {
       state.activeSort = action.payload;
       switch(action.payload) {
-        case 'Popular': state.loadedOffers = state.loadedOffersCopy.filter((item) => item.city.name === state.activeCity);
+        case SortType.Default: state.loadedOffers = state.loadedOffersCopy.filter((item) => item.city.name === state.activeCity);
           break;
-        case 'Price: low to high': state.loadedOffers = state.loadedOffers.sort((a, b) => a.price - b.price);
+        case SortType.PriceLowToHigh: state.loadedOffers = state.loadedOffers.sort((a, b) => a.price - b.price);
           break;
-        case 'Price: high to low': state.loadedOffers = state.loadedOffers.sort((a, b) => b.price - a.price);
+        case SortType.PriceHighToLow: state.loadedOffers = state.loadedOffers.sort((a, b) => b.price - a.price);
           break;
-        case 'Top rated first': state.loadedOffers = state.loadedOffers.sort((a, b) => b.rating - a.rating);
+        case SortType.TopRatedFirst: state.loadedOffers = state.loadedOffers.sort((a, b) => b.rating - a.rating);
           break;
       }
     },

@@ -20,14 +20,21 @@ export enum APIRoute {
 }
 
 export enum HttpCode {
-  BAD_REQUEST = 400,
-  UNAUTHORIZED = 401,
-  NOT_FOUND = 404,
+  BadRequest = 400,
+  Unauthorized = 401,
+  NotFound = 404,
 }
 
 export enum NameSpace {
-  data = 'DATA',
-  user = 'USER',
+  Data = 'DATA',
+  User = 'USER',
+}
+
+export enum SortType {
+  Default = 'Popular',
+  PriceLowToHigh = 'Price: low to high',
+  PriceHighToLow = 'Price: high to low',
+  TopRatedFirst = 'Top rated first',
 }
 
 export const ratingCalculation = function(userRating: string | number) {
