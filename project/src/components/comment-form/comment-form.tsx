@@ -21,6 +21,11 @@ function CommentForm() : JSX.Element {
     if (userComment.userRating !== null && userComment.desc.length > 0) {
       dispatch(addCommentAction({comment: userComment.desc, rating: userComment.userRating, hotelId: activeOffer?.id }));
     }
+    setUserComment({
+      ...userComment,
+      userRating: '',
+      desc: '',
+    });
   };
 
   return (
@@ -49,7 +54,7 @@ function CommentForm() : JSX.Element {
           )
         }
       </div>
-      <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
+      <textarea value={userComment.desc} className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
         onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => {
           setUserComment({
             ...userComment,
