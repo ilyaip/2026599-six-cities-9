@@ -20,6 +20,12 @@ function RoomScreen() : JSX.Element {
   const { activeOffer, comments } = useAppSelector(({DATA}) => DATA);
   const { authorizationStatus} = useAppSelector(({USER}) => USER);
 
+  let commentsCopy = comments.slice();
+  commentsCopy = commentsCopy.sort((a, b) => b.id - a.id);
+  if (commentsCopy.length > 10) {
+    commentsCopy = commentsCopy.slice(0, 10);
+  }
+
   const [isLoading, setLoading ] = useState(true);
 
   useEffect(() => {
@@ -142,7 +148,7 @@ function RoomScreen() : JSX.Element {
                   <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{comments.length}</span></h2>
                   <ul className="reviews__list">
                     {
-                      comments.map((comment) =>
+                      commentsCopy.map((comment) =>
                         (
                           <li key={comment.id} className="reviews__item">
                             <div className="reviews__user user">

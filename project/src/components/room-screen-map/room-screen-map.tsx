@@ -7,8 +7,17 @@ import { useAppSelector } from '../../hooks';
 
 const URL_MARKER_DEFAULT = '../../../img/pin.svg';
 
+const URL_MARKER_CURRENT = '../../../img/pin-active.svg';
+
+
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
+  iconSize: [40, 40],
+  iconAnchor: [20, 40],
+});
+
+const currentCustomIcon = new Icon({
+  iconUrl: URL_MARKER_CURRENT,
   iconSize: [40, 40],
   iconAnchor: [20, 40],
 });
@@ -30,6 +39,15 @@ function RoomScreenMap() : JSX.Element {
           .setIcon(defaultCustomIcon)
           .addTo(map);
       });
+      if (activeOffer !== null) {
+        const marker = new Marker({
+          lat: +activeOffer.city.location.latitude,
+          lng: +activeOffer.city.location.longitude,
+        });
+        marker
+          .setIcon(currentCustomIcon)
+          .addTo(map);
+      }
     }
   }, [map, nearbyOffers, activeOffer]);
   return (

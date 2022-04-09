@@ -13,6 +13,11 @@ function FavoritesList() : JSX.Element {
 
   const [isLoading, setLoading ] = useState(true);
 
+  let citiesList:string[] =[];
+  favorites.forEach((item) => {
+    citiesList.push(item.city.name);
+  });
+  citiesList = Array.from(new Set(citiesList));
 
   useEffect(() => {
     (async()=> await dispatch(fetchFavoriteOffersAction()))().finally(() => setLoading(false));
@@ -23,11 +28,28 @@ function FavoritesList() : JSX.Element {
     return <ClipLoader/>;
   }
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <ul className="favorites__list">
       {
-        favorites.map((offer: Offer) => <FavoritesPlaceCard key={offer.id} offer={offer} />)
+        citiesList.map((city: string) =>
+          (
+            <li key={city} className="favorites__locations-items">
+              <div className="favorites__locations locations locations--current">
+                <div className="locations__item">
+                  <button style={{border: 'none'}} className="locations__item-link">
+                    <span>{city}</span>
+                  </button>
+                </div>
+              </div>
+              <div className="favorites__places">
+                {
+                  favorites.filter((item) => item.city.name === city).map((offer: Offer) => <FavoritesPlaceCard key={offer.id} offer={offer} />)
+                }
+              </div>
+            </li>
+          ),
+        )
       }
-    </div>
+    </ul>
   );
 }
 
